@@ -26,7 +26,6 @@ import {
 import { navigationRef, useBackButtonHandler } from './navigation-utilities'
 import { NavigationPathNames, NavigatorParamList } from './app-navigator.types'
 import { StoreState } from '../store'
-import { Loader } from '../components'
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<NavigatorParamList>()
@@ -50,10 +49,6 @@ const AppStack = () => {
       }
     }
   }, [loggedIn, loading])
-
-  if (loading) {
-    return <Loader loading={loading} />
-  }
 
   return (
     <Stack.Navigator

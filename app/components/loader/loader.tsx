@@ -30,7 +30,6 @@ export const Loader: FC<LoaderProps> = ({
 
   return (
     <>
-      {children}
       <View style={style}>
         <ActivityIndicator size="small" color={color.palette.aquaGreen} />
       </View>

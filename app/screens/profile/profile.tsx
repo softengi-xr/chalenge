@@ -9,6 +9,7 @@ import {
   Button,
   Column,
   Error,
+  Loader,
   Screen,
   Text,
   TextField
@@ -56,7 +57,7 @@ const INPUT: ViewStyle = {
 export const ProfileScreen: FC<
   StackScreenProps<NavigatorParamList, NavigationPathNames.PROFILE>
 > = ({ navigation }) => {
-  const { user } = useSelector((state: StoreState) => ({
+  const { user, loading } = useSelector((state: StoreState) => ({
     ...state.auth
   }))
   const dispatch = useDispatch()
@@ -87,49 +88,51 @@ export const ProfileScreen: FC<
   }
 
   return (
-    <View style={FULL} testID={NavigationPathNames.PROFILE}>
-      <Screen
-        preset="fixed"
-        style={containerStyle(insets)}
-        backgroundColor={color.background}
-      >
-        <Column justifyContent="space-between" style={CONTENT}>
-          <Text preset="miniTitle" text="Profile" />
-          <TextField
-            defaultValue={state.name}
-            label="Name shown on your shared cards"
-            labelStyle={INPUT_LABEL}
-            inputStyle={INPUT_STYLE}
-            style={INPUT}
-            onChangeText={handleOnChange('name')}
-          />
-          <TextField
-            defaultValue={state.email}
-            label="Email"
-            labelStyle={INPUT_LABEL}
-            inputStyle={INPUT_STYLE}
-            onChangeText={handleOnChange('email')}
-          />
-          {!emailAvaliable && (
-            <Error text="Email not correctly" style={ERROR} />
-          )}
-        </Column>
-        <Column alignItems="center">
-          <Button
-            text="Log out"
-            preset="secondary"
-            style={BUTTON}
-            onPress={handleOnLogout}
-          />
-          <Button
-            disabled={isDisabled}
-            text="Done"
-            preset="primary"
-            style={BUTTON}
-            onPress={handleOnSubmit}
-          />
-        </Column>
-      </Screen>
-    </View>
+    <Loader loading={loading}>
+      <View style={FULL} testID={NavigationPathNames.PROFILE}>
+        <Screen
+          preset="fixed"
+          style={containerStyle(insets)}
+          backgroundColor={color.background}
+        >
+          <Column justifyContent="space-between" style={CONTENT}>
+            <Text preset="miniTitle" text="Profile" />
+            <TextField
+              defaultValue={state.name}
+              label="Name shown on your shared cards"
+              labelStyle={INPUT_LABEL}
+              inputStyle={INPUT_STYLE}
+              style={INPUT}
+              onChangeText={handleOnChange('name')}
+            />
+            <TextField
+              defaultValue={state.email}
+              label="Email"
+              labelStyle={INPUT_LABEL}
+              inputStyle={INPUT_STYLE}
+              onChangeText={handleOnChange('email')}
+            />
+            {!emailAvaliable && (
+              <Error text="Email not correctly" style={ERROR} />
+            )}
+          </Column>
+          <Column alignItems="center">
+            <Button
+              text="Log out"
+              preset="secondary"
+              style={BUTTON}
+              onPress={handleOnLogout}
+            />
+            <Button
+              disabled={isDisabled}
+              text="Done"
+              preset="primary"
+              style={BUTTON}
+              onPress={handleOnSubmit}
+            />
+          </Column>
+        </Screen>
+      </View>
+    </Loader>
   )
 }
